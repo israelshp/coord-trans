@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>המרת קואורדינטות</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>המרת קואורדינטות</h1>
+
+    <div class="drop-zone" id="dropZone">
+      לחץ לבחירת קובץ CSV<br />או גרור ושחרר כאן
+    </div>
+    <input type="file" id="fileInput" accept=".csv" style="display: none" />
+    <div id="crs-container">
+      <div>המרה מ:</div>
+      <div class="box crs" id="crs-input" data-value="4326">
+        רשת גיאוגרפית עולמית (WGS84)
+      </div>
+      <!-- <div class="arrow">⬅</div> -->
+
+      <div>אל:</div>
+      <div class="box crs" id="crs-output" data-value="2039">
+        רשת ישראל החדשה (ITM)
+      </div>
+      <div id="flip" class="box btn">⇄</div>
+    </div>
+
+    <div class="fields">
+      <div>
+        <label for="field-x">עמודת X:</label>
+        <select class="field-select" name="field-x" id="field-x"></select>
+      </div>
+      <div>
+        <label for="field-y">עמודת Y:</label>
+        <select class="field-select" name="field-y" id="field-y"></select>
+      </div>
+    </div>
+    <button class="box btn" onclick="convertCSV()">המרה והורדה</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

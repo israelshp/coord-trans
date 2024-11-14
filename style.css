@@ -1,0 +1,98 @@
+:root {
+  --main-color: #003e81;
+  --secondary-color: #bdf1ff;
+}
+* {
+  font-family: Assistant, sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+body {
+  margin: 0 auto;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#crs-container {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.box {
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+.crs {
+  background: var(--secondary-color);
+  width: 200px;
+}
+.arrow {
+  font-size: x-large;
+}
+.btn {
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
+  color: white;
+  cursor: pointer;
+  font-size: large;
+}
+#flip {
+  width: 20px;
+}
+.btn:hover {
+  background-color: var(--main-color);
+  color: var(--secondary-color);
+}
+.drop-zone {
+  width: 100%;
+  max-width: 80vw;
+  height: fit-content;
+  min-height: 150px;
+  max-height: 40vh;
+  border: 2px dashed var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 20px 0;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  overflow: auto;
+}
+.drop-zone.dragover {
+  background-color: #e0e7ff;
+  color: var(--main-color);
+}
+.fields {
+  width: fit-content;
+  gap: 2rem;
+  display: none;
+}
+.fields > div {
+  display: flex;
+  gap: 1rem;
+}
+table {
+  width: 100%;
+}
+thead {
+  font-weight: bold;
+  background-color: #bfbfbf;
+  background-color: var(--main-color);
+  color: white;
+}
+tbody tr:hover {
+  background-color: var(--secondary-color);
+}
+table,
+tr,
+td,
+th {
+  text-align: center;
+  border-collapse: collapse;
+  padding: 0px 1rem;
+  border: 1px solid #bfbfbf;
+}
