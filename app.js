@@ -92,6 +92,7 @@ function buildTable(data, fields) {
     tbody.appendChild(tr);
   });
   dropZone.style.alignItems = "flex-start";
+  dropZone.style.justifyContent = "space-between";
   dropZone.innerHTML = "";
   dropZone.appendChild(table);
 }

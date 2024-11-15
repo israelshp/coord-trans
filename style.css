@@ -51,7 +51,7 @@ body {
   max-width: 80vw;
   height: fit-content;
   min-height: 150px;
-  max-height: 40vh;
+  max-height: 60vh;
   border: 2px dashed var(--secondary-color);
   display: flex;
   align-items: center;
@@ -61,6 +61,7 @@ body {
   transition: background-color 0.3s ease;
   cursor: pointer;
   overflow: auto;
+  color: #555555;
 }
 .drop-zone.dragover {
   background-color: #e0e7ff;
