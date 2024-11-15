@@ -51,7 +51,7 @@ body {
   max-width: 80vw;
   height: fit-content;
   min-height: 150px;
-  max-height: 60vh;
+  max-height: 45vh;
   border: 2px dashed var(--secondary-color);
   display: flex;
   align-items: center;
