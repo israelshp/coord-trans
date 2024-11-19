@@ -39,6 +39,9 @@ body {
   cursor: pointer;
   font-size: large;
 }
+.btn-container {
+  display: flex;
+}
 #flip {
   width: 20px;
 }
@@ -51,7 +54,7 @@ body {
   max-width: 80vw;
   height: fit-content;
   min-height: 150px;
-  max-height: 45vh;
+  max-height: 60vh;
   border: 2px dashed var(--secondary-color);
   display: flex;
   align-items: center;
@@ -84,6 +87,8 @@ thead {
   background-color: #bfbfbf;
   background-color: var(--main-color);
   color: white;
+  position: sticky;
+  top: 0;
 }
 tbody tr:hover {
   background-color: var(--secondary-color);
@@ -96,4 +101,28 @@ th {
   border-collapse: collapse;
   padding: 0px 1rem;
   border: 1px solid #bfbfbf;
+}
+td,
+th {
+  border: none;
+  font-size: 0.9rem;
+}
+
+.loading {
+  display: none;
+  border: 3px solid var(--main-color);
+  border-bottom: 3px solid var(--secondary-color);
+  border-left: 3px solid var(--secondary-color);
+  border-radius: 50%;
+  vertical-align: middle;
+  margin: auto 8px;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -122,6 +122,7 @@ function populateFields(fields) {
 }
 
 async function convertCSV() {
+  document.querySelector(".loading").style.display = "inline-block";
   inputCRS = document.getElementById("crs-input").dataset.value;
   outputCRS = document.getElementById("crs-output").dataset.value;
 
@@ -129,11 +130,13 @@ async function convertCSV() {
   const fieldY = document.getElementById("field-y").value;
 
   if (fieldX === fieldY) {
-    alert("יש לבחור שדות שונות עבור X ו-Y");
+    alert("יש לבחור עמודות שונות עבור X ו-Y");
   }
 
   if (!inputCRS || !outputCRS || !selectedFile) {
-    alert("Please provide input CRS, output CRS, and a CSV file.");
+    alert("יש לטעון קובץ");
+
+    document.querySelector(".loading").style.display = "none";
     return;
   }
 
@@ -148,21 +151,28 @@ async function convertCSV() {
     );
   } catch (error) {
     alert("Invalid CRS code or CRS not found.");
+
+    document.querySelector(".loading").style.display = "none";
     return;
   }
 
   let isValid = true;
   invalidCoords = null;
 
-  let outputData = coordsData.map((row) => {
+  let outputData = coordsData.map((row, idx) => {
     if (row[fieldX] && row[fieldY]) {
-      console.log(row[fieldX], row[fieldY]);
-      // assuming the CSV has x, y columns
-      const [x, y] = proj4(inputCRS, outputCRS, [
-        parseFloat(row[fieldX]),
-        parseFloat(row[fieldY]),
-      ]);
-      console.log(x, y);
+      let valueX = row[fieldX];
+      let valueY = row[fieldY];
+      // trim any non-digit characters
+      valueX = valueX.replaceAll(/^\D+|\D+$/g, "");
+      valueY = valueY.replaceAll(/^\D+|\D+$/g, "");
+      valueX = parseFloat(valueX);
+      valueY = parseFloat(valueY);
+      if (isNaN(valueX) || isNaN(valueY)) {
+        alert(`ערך לא תקין בשורה ${idx + 1}: (${row[fieldX]}, ${row[fieldY]})`);
+        document.querySelector(".loading").style.display = "none";
+      }
+      const [x, y] = proj4(inputCRS, outputCRS, [valueX, valueY]);
       if (!isFinite(x) || !isFinite(y)) {
         isValid = false;
         invalidCoords = `${row[fieldX]}, ${row[fieldY]}`;
@@ -180,8 +190,11 @@ async function convertCSV() {
     alert(
       `הערכים ${invalidCoords} לא תקינים עבור רשת הקואורדינטות שנבחרה (${inputCRS})`
     );
+    document.querySelector(".loading").style.display = "none";
     return;
   }
+
+  document.querySelector(".loading").style.display = "none";
 
   downloadCSV(outputData);
 
