@@ -87,6 +87,9 @@ function buildTable(data, fields) {
     Object.keys(row).forEach((key) => {
       const td = document.createElement("td");
       td.textContent = row[key];
+      if (row[key].includes("°")) {
+        td.style.direction = "ltr";
+      }
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
@@ -119,6 +122,25 @@ function populateFields(fields) {
       }
     });
   });
+}
+
+function parseDMS(input) {
+  const parts = input.split(/[^\d\w.]+/);
+  const degrees = parseFloat(parts[0]);
+  const minutes = parseFloat(parts[1]);
+  const seconds = parseFloat(parts[2]);
+  const direction = parts[3];
+  return { degrees, minutes, seconds, direction };
+}
+
+function convertDMStoDD(degrees, minutes, seconds, direction) {
+  let dd = degrees + minutes / 60 + seconds / (60 * 60);
+
+  if (direction === "S" || direction === "W") {
+    dd = dd * -1;
+  }
+
+  return dd;
 }
 
 async function convertCSV() {
@@ -163,9 +185,27 @@ async function convertCSV() {
     if (row[fieldX] && row[fieldY]) {
       let valueX = row[fieldX];
       let valueY = row[fieldY];
-      // trim any non-digit characters
-      valueX = valueX.replaceAll(/^\D+|\D+$/g, "");
-      valueY = valueY.replaceAll(/^\D+|\D+$/g, "");
+      if (valueX.includes("°")) {
+        console.debug("DMS detected");
+        let dmsX = parseDMS(valueX);
+        let dmsY = parseDMS(valueY);
+        valueX = convertDMStoDD(
+          dmsX.degrees,
+          dmsX.minutes,
+          dmsX.seconds,
+          dmsX.direction
+        );
+        valueY = convertDMStoDD(
+          dmsY.degrees,
+          dmsY.minutes,
+          dmsY.seconds,
+          dmsY.direction
+        );
+      } else {
+        // trim any non-digit characters
+        valueX = valueX.replaceAll(/^\D+|\D+$/g, "");
+        valueY = valueY.replaceAll(/^\D+|\D+$/g, "");
+      }
       valueX = parseFloat(valueX);
       valueY = parseFloat(valueY);
       if (isNaN(valueX) || isNaN(valueY)) {
